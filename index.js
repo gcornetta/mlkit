@@ -5,6 +5,9 @@ const { loadPy } = require('./pyenv')
 // import the JS wrapper library
 const { classification_score, np_array } = require('./jslib')
 
+// import the ota model
+const { ota } = require('./models')
+
 // main module
 const main = async  () => {
     console.log(chalk.blue.bgRed.bold('Loading Python environment...'))
@@ -22,6 +25,10 @@ const main = async  () => {
     // wait for the np_array script to be executed (an array of BigInt64Array is expected)
     const matrix = await np_array(3, 5)
     console.log(matrix)
+
+    console.log(chalk.blue.bgRed.bold('Testing OTA model...'))
+    const val = ota(2e-3, 1e5, 100e-12, 1e5)
+    console.log(`magnitude: ${val.magnitude}, phase: ${val.phase}`)
 }
 
 main()
