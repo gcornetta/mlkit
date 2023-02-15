@@ -6,7 +6,7 @@ const { loadPy } = require('./pyenv')
 const { classification_score, np_array } = require('./jslib')
 
 // import the ota model
-const { ota } = require('./models')
+const Ota  = require('./models')
 
 // main module
 const main = async  () => {
@@ -27,8 +27,15 @@ const main = async  () => {
     console.log(matrix)
 
     console.log(chalk.blue.bgRed.bold('Testing OTA model...'))
-    const val = ota(2e-3, 1e5, 100e-12, 1e5)
-    console.log(`magnitude: ${val.magnitude}, phase: ${val.phase}`)
+    const amp = {
+        Rs: 1e4,
+        Cin: 10e-12,
+        Gm: 2e-3,
+        Ro: 1e5,
+        CL: 10e-12
+    }
+    const ota = new Ota (amp, 1e5)
+    console.log(`magnitude: ${ota.magnitude}, phase: ${ota.phase}, bandwidth: ${ota.bandwidth}`)
 }
 
 main()
